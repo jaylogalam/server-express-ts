@@ -1,8 +1,11 @@
 import express from "express";
 import { corsMiddleware } from "./cors";
 import loginRouter from "./auth/routes/auth.router";
+import { connectDB } from "./db/mongodb";
 
 const app = express();
+
+connectDB();
 
 app.use(corsMiddleware);
 
