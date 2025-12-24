@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/");
+    await mongoose.connect("mongodb://localhost:27017/excel-visualizer");
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error:", error);
