@@ -53,11 +53,11 @@ loginRouter.post("", async (req: Request, res: Response) => {
     if (error instanceof AuthError) {
       return res
         .status(error.statusCode)
-        .json({ error: "Invalid email or password" });
+        .json({ message: "Invalid email or password" });
     }
 
     // Handle other errors
-    return res.status(500).json({ error: `Internal server error` });
+    return res.status(500).json();
   }
 });
 

@@ -37,17 +37,17 @@ signupRouter.post("", async (req: Request, res: Response) => {
       const field = Object.keys(error.keyPattern)[0];
       if (field === "username") {
         return res.status(409).json({
-          error: `Username already exists`,
+          message: `Username already exists`,
         });
       }
       if (field === "email") {
         return res.status(409).json({
-          error: `Email already exists`,
+          message: `Email already exists`,
         });
       }
     }
 
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json();
   }
 });
 
