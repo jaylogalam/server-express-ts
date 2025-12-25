@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { corsMiddleware } from "./cors";
 import { authRouter } from "./auth/routes";
@@ -13,6 +14,8 @@ app.use(express.json());
 
 app.use("/auth", authRouter);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
