@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import { corsMiddleware } from "./cors";
+import { corsMiddleware } from "./middleware/cors";
 import { authRouter } from "./auth-custom/routes";
 import { connectDB } from "./db/mongodb";
 
