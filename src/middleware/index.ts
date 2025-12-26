@@ -4,7 +4,7 @@ import { auth, toNodeHandler } from "./auth";
 
 const registerMiddleware = (app: express.Application) => {
   app.use(corsMiddleware);
-  app.all("auth/*splat", toNodeHandler(auth));
+  app.all("/api/auth/*splat", toNodeHandler(auth));
   app.use(express.json());
 };
 

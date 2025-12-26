@@ -1,15 +1,11 @@
 import "dotenv/config";
 import express from "express";
-import { authRouter } from "./auth-better/routes";
 import { registerMiddleware } from "./middleware";
 import { client } from "./db/mongodb";
 
 const app = express();
 
 registerMiddleware(app);
-
-// Routes
-app.use("/auth", authRouter);
 
 // Server
 const server = app.listen(process.env.PORT!, () => {

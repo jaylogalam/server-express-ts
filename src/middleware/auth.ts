@@ -8,6 +8,7 @@ const db = client.db("users");
 
 const auth = betterAuth({
   database: mongodbAdapter(db),
+  basePath: "/api/auth",
   emailAndPassword: {
     enabled: true,
   },
