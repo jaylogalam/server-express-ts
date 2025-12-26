@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { AuthError } from "../errors/auth.error";
+import { AuthError } from "../../core/errors/auth.error";
 
 type ComparePasswordParams = {
   password: string;

@@ -1,6 +1,6 @@
 import { QueryFilter } from "mongoose";
 import User, { IUser } from "../models/user.model";
-import { AuthError } from "../errors/auth.error";
+import { AuthError } from "../../core/errors/auth.error";
 
 // All user fields except password_hash
 type SafeUserFields =

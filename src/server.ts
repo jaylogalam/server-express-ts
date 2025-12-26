@@ -1,18 +1,23 @@
+import "dotenv/config";
 import express from "express";
-import { corsMiddleware } from "./cors";
-import { authRouter } from "./auth/routes";
-import { connectDB } from "./db/mongodb";
+import { registerMiddleware } from "./middleware";
+import { client } from "./db/mongodb";
 
 const app = express();
 
-connectDB();
+registerMiddleware(app);
 
-app.use(corsMiddleware);
+// Server
+const server = app.listen(process.env.PORT!, () => {
+  console.log(`Server is running on port ${process.env.PORT!}`);
+});
 
-app.use(express.json());
-
-app.use("/auth", authRouter);
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+// Graceful Shutdown
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM signal received: closing HTTP server");
+  server.close(async () => {
+    await client.close();
+    console.log("MongoDB connection closed.");
+    process.exit(0);
+  });
 });
