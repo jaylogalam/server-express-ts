@@ -5,6 +5,7 @@ import { client } from "./db/mongodb";
 
 const app = express();
 
+// Middleware
 registerMiddleware(app);
 
 // Server
