@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import {
-  CreatePriceInput,
-  UpdatePriceInput,
+  CreatePriceParams,
+  UpdatePriceParams,
   ListPricesParams,
   PriceResponse,
   PriceListResponse,
@@ -10,7 +10,7 @@ import {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const priceServices = {
-  createPrice: async (params: CreatePriceInput): Promise<PriceResponse> => {
+  createPrice: async (params: CreatePriceParams): Promise<PriceResponse> => {
     const price = await stripe.prices.create(params);
     return price;
   },
@@ -22,7 +22,7 @@ const priceServices = {
 
   updatePrice: async (
     id: string,
-    params: UpdatePriceInput
+    params: UpdatePriceParams
   ): Promise<PriceResponse> => {
     const price = await stripe.prices.update(id, params);
     return price;

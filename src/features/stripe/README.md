@@ -5,22 +5,22 @@
 ### Products: `/stripe/products`
 
 ```bash
-POST   /stripe/products           # Create product
-GET    /stripe/products/:id       # Get product
-PATCH  /stripe/products/:id       # Update product
-DELETE /stripe/products/:id       # Delete product
-GET    /stripe/products           # List products
-GET    /stripe/products/search    # Search products
+POST   /stripe/products/create          # Create product
+GET    /stripe/products/retrieve/:id    # Retrieve product
+PATCH  /stripe/products/update/:id      # Update product
+DELETE /stripe/products/delete/:id      # Delete product
+GET    /stripe/products/list            # List products
+GET    /stripe/products/search          # Search products
 ```
 
 ### Prices: `/stripe/prices`
 
 ```bash
-POST   /stripe/prices             # Create price
-GET    /stripe/prices/:id         # Get price
-PATCH  /stripe/prices/:id         # Update price (metadata only)
-GET    /stripe/prices             # List prices
-GET    /stripe/prices/search      # Search prices
+POST   /stripe/prices/create             # Create price
+GET    /stripe/prices/retrieve/:id       # Retrieve price
+PATCH  /stripe/prices/update/:id         # Update price (metadata only)
+GET    /stripe/prices/list               # List prices
+GET    /stripe/prices/search             # Search prices
 ```
 
 ---

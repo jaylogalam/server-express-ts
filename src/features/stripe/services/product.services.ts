@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import {
-  CreateProductInput,
-  UpdateProductInput,
+  CreateProductParams,
+  UpdateProductParams,
   ListProductsParams,
   ProductResponse,
   ProductListResponse,
@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const productServices = {
   createProduct: async (
-    params: CreateProductInput
+    params: CreateProductParams
   ): Promise<ProductResponse> => {
     const product = await stripe.products.create(params);
     return product;
@@ -24,7 +24,7 @@ const productServices = {
 
   updateProduct: async (
     id: string,
-    params: UpdateProductInput
+    params: UpdateProductParams
   ): Promise<ProductResponse> => {
     const product = await stripe.products.update(id, params);
     return product;
