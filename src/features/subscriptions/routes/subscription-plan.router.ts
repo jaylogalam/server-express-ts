@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const plans = await plansServices.readPlans();
-    return res.json({ data: plans });
+    return res.json(plans);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
@@ -15,7 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.post("/create", async (req: Request, res: Response) => {
   try {
     const plan = await plansServices.createPlan(req.body);
-    return res.json({ data: plan });
+    return res.json(plan);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
