@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { registerMiddleware } from "./middleware";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
 import { connectToDatabase } from "./db/mongodb";
+import { stripeRouter } from "./features/stripe/routes";
 
 async function startServer() {
   const app = express();
@@ -17,6 +18,7 @@ async function startServer() {
 
   // Routers
   app.use("/subscription", subscriptionsRouter);
+  app.use("/stripe", stripeRouter);
 
   // Start HTTP server
   const server = app.listen(process.env.PORT!, () => {
