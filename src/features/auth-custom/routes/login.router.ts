@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { comparePassword } from "../services/compare-password.service";
-import { AuthError } from "../../core/errors/auth.error";
+import { AuthError } from "../../../core/errors/auth.error";
 import { readUser } from "../services/read-user.service";
 import { generateToken } from "../services/generate-token.service";
 
