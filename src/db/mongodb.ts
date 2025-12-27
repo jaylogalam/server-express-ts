@@ -3,7 +3,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 const uri = process.env.MONGODB_URI!;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-export const client = new MongoClient(uri, {
+export const mongoClient = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -12,7 +12,7 @@ export const client = new MongoClient(uri, {
 });
 
 async function run() {
-  await client.connect();
+  await mongoClient.connect();
 }
 
 run().catch(console.dir);
