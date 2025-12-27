@@ -1,11 +1,11 @@
 import express from "express";
 import { corsMiddleware } from "./cors";
-import { auth, toNodeHandler } from "./auth";
+import { authMiddleware, toNodeHandler } from "./auth";
 
-const registerMiddleware = (app: express.Application) => {
+const registerMiddleware = async (app: express.Application) => {
   app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
   app.use(corsMiddleware);
-  app.all("/api/auth/*splat", toNodeHandler(auth));
+  app.all("/api/auth/*splat", toNodeHandler(await authMiddleware()));
   app.use(express.json());
 };
 

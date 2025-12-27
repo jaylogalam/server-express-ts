@@ -1,13 +1,17 @@
 import "dotenv/config";
 import express from "express";
+import mongoose from "mongoose";
 import { registerMiddleware } from "./middleware";
-import { mongoClient } from "./db/mongodb";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
+import { connectToDatabase } from "./db/mongodb";
 
 const app = express();
 
 // Middleware
 registerMiddleware(app);
+
+// Database
+connectToDatabase();
 
 // Routers
 app.use("/subscription", subscriptionsRouter);
@@ -21,8 +25,8 @@ const server = app.listen(process.env.PORT!, () => {
 process.on("SIGTERM", async () => {
   console.log("SIGTERM signal received: closing HTTP server");
   server.close(async () => {
-    await mongoClient.close();
-    console.log("MongoDB connection closed.");
+    await mongoose.connection.close();
+    console.log("Mongoose connection closed.");
     process.exit(0);
   });
 });

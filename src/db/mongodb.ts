@@ -1,18 +1,27 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import mongoose, { Mongoose } from "mongoose";
 
-const uri = process.env.MONGODB_URI!;
+const globalWithMongoose = global as typeof global & {
+  mongoose?: {
+    conn: Mongoose | null;
+    promise: Promise<Mongoose> | null;
+  };
+};
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-export const mongoClient = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-async function run() {
-  await mongoClient.connect();
+if (!globalWithMongoose.mongoose) {
+  globalWithMongoose.mongoose = { conn: null, promise: null };
 }
 
-run().catch(console.dir);
+const cached = globalWithMongoose.mongoose;
+
+export async function connectToDatabase(): Promise<Mongoose> {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(process.env.MONGODB_URI!, {
+      dbName: process.env.MONGODB_NAME!,
+    });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
