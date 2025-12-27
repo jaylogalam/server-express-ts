@@ -5,28 +5,37 @@ import { registerMiddleware } from "./middleware";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
 import { connectToDatabase } from "./db/mongodb";
 
-const app = express();
+async function startServer() {
+  const app = express();
 
-// Middleware
-registerMiddleware(app);
+  // Connect to database first
+  await connectToDatabase();
+  console.log("✓ Database connected");
 
-// Database
-connectToDatabase();
+  // Then setup middleware (async because of Better Auth)
+  await registerMiddleware(app);
 
-// Routers
-app.use("/subscription", subscriptionsRouter);
+  // Routers
+  app.use("/subscription", subscriptionsRouter);
 
-// Server
-const server = app.listen(process.env.PORT!, () => {
-  console.log(`Server is running on port ${process.env.PORT!}`);
-});
-
-// Graceful Shutdown
-process.on("SIGTERM", async () => {
-  console.log("SIGTERM signal received: closing HTTP server");
-  server.close(async () => {
-    await mongoose.connection.close();
-    console.log("Mongoose connection closed.");
-    process.exit(0);
+  // Start HTTP server
+  const server = app.listen(process.env.PORT!, () => {
+    console.log(`✓ Server is running on port ${process.env.PORT!}`);
   });
+
+  // Graceful Shutdown
+  process.on("SIGTERM", async () => {
+    console.log("SIGTERM signal received: closing HTTP server");
+    server.close(async () => {
+      await mongoose.connection.close();
+      console.log("✓ Mongoose connection closed.");
+      process.exit(0);
+    });
+  });
+}
+
+// Start the application
+startServer().catch((error) => {
+  console.error("✗ Failed to start server:", error);
+  process.exit(1);
 });
