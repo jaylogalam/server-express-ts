@@ -73,6 +73,32 @@ DELETE /stripe/webhooks/delete/:id      # Delete webhook endpoint
 GET    /stripe/webhooks/list            # List webhook endpoints
 ```
 
+### Subscriptions: `/stripe/subscriptions`
+
+```bash
+POST   /stripe/subscriptions/create              # Create subscription
+GET    /stripe/subscriptions/retrieve/:id        # Retrieve subscription
+PATCH  /stripe/subscriptions/update/:id          # Update subscription
+GET    /stripe/subscriptions/list                # List subscriptions
+POST   /stripe/subscriptions/cancel/:id          # Cancel subscription
+POST   /stripe/subscriptions/resume/:id          # Resume subscription
+GET    /stripe/subscriptions/customer/:customerId  # Get customer subscriptions
+POST   /stripe/subscriptions/portal              # Create billing portal session
+```
+
+### Stripe Webhook Handler: `/webhooks`
+
+```bash
+POST   /webhooks/stripe                 # Receive Stripe webhook events
+```
+
+> **⚠️ Critical Setup Required**:
+>
+> - Add `STRIPE_WEBHOOK_SECRET` to your `.env` file
+> - This endpoint must use raw body parsing for signature verification
+> - Configure in `server.ts` before JSON middleware
+> - Handles: checkout completion, subscription events, invoice events
+
 ---
 
 ## ⚙️ Query Parameters
@@ -113,6 +139,15 @@ GET    /stripe/webhooks/list            # List webhook endpoints
 - `starting_after` - Pagination cursor
 - `ending_before` - Pagination cursor
 
+### Subscriptions
+
+- `customer` - Filter by customer ID
+- `price` - Filter by price ID
+- `status` - Filter by status (active, past_due, unpaid, canceled, incomplete, incomplete_expired, trialing, paused)
+- `limit` - Number of items (max 100)
+- `starting_after` - Pagination cursor
+- `ending_before` - Pagination cursor
+
 ---
 
 ## 🗂️ Project Structure
@@ -125,6 +160,7 @@ stripe/
 │   ├── checkout-session.services.ts # Checkout session operations
 │   ├── payment-link.services.ts # Payment link operations
 │   ├── webhook.services.ts      # Webhook endpoint operations
+│   ├── subscription.services.ts # Subscription CRUD + Billing Portal
 │   └── index.ts                 # Service exports
 ├── routes/
 │   ├── product.routers.ts       # Product endpoints
@@ -132,6 +168,8 @@ stripe/
 │   ├── checkout-session.routers.ts # Session endpoints
 │   ├── payment-link.routers.ts  # Payment link endpoints
 │   ├── webhook.routers.ts       # Webhook endpoint endpoints
+│   ├── subscription.routers.ts  # Subscription endpoints
+│   ├── stripe-webhook.routers.ts # Stripe event webhook handler (/webhooks/stripe)
 │   └── index.ts                 # Router exports
 ├── types/
 │   └── index.ts                 # TypeScript type definitions
