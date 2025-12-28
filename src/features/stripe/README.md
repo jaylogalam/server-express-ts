@@ -43,14 +43,14 @@ GET    /stripe/prices/list              # List prices
 GET    /stripe/prices/search            # Search prices
 ```
 
-### Checkout Sessions: `/stripe/sessions`
+### Checkout Sessions: `/stripe/checkout-sessions`
 
 ```bash
-POST   /stripe/sessions/create          # Create checkout session
-GET    /stripe/sessions/retrieve/:id    # Retrieve session
-PATCH  /stripe/sessions/update/:id      # Update session
-GET    /stripe/sessions/list            # List sessions
-POST   /stripe/sessions/expire/:id      # Expire session
+POST   /stripe/checkout-sessions/create          # Create checkout session
+GET    /stripe/checkout-sessions/retrieve/:id    # Retrieve session
+PATCH  /stripe/checkout-sessions/update/:id      # Update session
+GET    /stripe/checkout-sessions/list            # List sessions
+POST   /stripe/checkout-sessions/expire/:id      # Expire session
 ```
 
 ### Payment Links: `/stripe/payment-links`
@@ -122,14 +122,14 @@ stripe/
 ├── services/
 │   ├── product.services.ts      # Product CRUD operations
 │   ├── price.services.ts        # Price CRUD operations
-│   ├── session.services.ts      # Checkout session operations
+│   ├── checkout-session.services.ts # Checkout session operations
 │   ├── payment-link.services.ts # Payment link operations
 │   ├── webhook.services.ts      # Webhook endpoint operations
 │   └── index.ts                 # Service exports
 ├── routes/
 │   ├── product.routers.ts       # Product endpoints
 │   ├── price.routers.ts         # Price endpoints
-│   ├── session.routers.ts       # Session endpoints
+│   ├── checkout-session.routers.ts # Session endpoints
 │   ├── payment-link.routers.ts  # Payment link endpoints
 │   ├── webhook.routers.ts       # Webhook endpoint endpoints
 │   └── index.ts                 # Router exports

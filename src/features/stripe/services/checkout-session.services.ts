@@ -9,7 +9,7 @@ import {
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-const sessionServices = {
+const checkoutSessionServices = {
   createSession: async (
     params: CreateSessionParams
   ): Promise<SessionResponse> => {
@@ -43,4 +43,4 @@ const sessionServices = {
   },
 };
 
-export default sessionServices;
+export default checkoutSessionServices;
