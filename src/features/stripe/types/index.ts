@@ -20,12 +20,20 @@ export type CreatePaymentLinkParams = Stripe.PaymentLinkCreateParams;
 export type UpdatePaymentLinkParams = Stripe.PaymentLinkUpdateParams;
 export type ListPaymentLinksParams = Stripe.PaymentLinkListParams;
 
+// Webhook Endpoint Types
+export type CreateWebhookEndpointParams = Stripe.WebhookEndpointCreateParams;
+export type UpdateWebhookEndpointParams = Stripe.WebhookEndpointUpdateParams;
+export type ListWebhookEndpointsParams = Stripe.WebhookEndpointListParams;
+
 // Response types
 export type ProductResponse = Stripe.Product;
 export type PriceResponse = Stripe.Price;
 export type SessionResponse = Stripe.Checkout.Session;
 export type PaymentLinkResponse = Stripe.PaymentLink;
+export type WebhookEndpointResponse = Stripe.WebhookEndpoint;
 export type ProductListResponse = Stripe.ApiList<Stripe.Product>;
 export type PriceListResponse = Stripe.ApiList<Stripe.Price>;
 export type SessionListResponse = Stripe.ApiList<Stripe.Checkout.Session>;
 export type PaymentLinkListResponse = Stripe.ApiList<Stripe.PaymentLink>;
+export type WebhookEndpointListResponse =
+  Stripe.ApiList<Stripe.WebhookEndpoint>;

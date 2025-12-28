@@ -1,6 +1,6 @@
 # Stripe Feature - Quick Reference
 
-Complete Stripe integration with services and routers for Products, Prices, Checkout Sessions, and Payment Links.
+Complete Stripe integration with services and routers for Products, Prices, Checkout Sessions, Payment Links, and Webhook Endpoints.
 
 ---
 
@@ -15,6 +15,8 @@ Complete Stripe integration with services and routers for Products, Prices, Chec
 > **Session Expiration**: Checkout sessions auto-expire after 24 hours unless completed
 
 > **Payment Links**: Shareable URLs for accepting payments without building custom checkout
+
+> **Webhook Endpoints**: Configure endpoints to receive event notifications from Stripe
 
 ---
 
@@ -61,6 +63,16 @@ GET    /stripe/payment-links/list           # List payment links
 GET    /stripe/payment-links/line-items/:id # Get line items
 ```
 
+### Webhook Endpoints: `/stripe/webhooks`
+
+```bash
+POST   /stripe/webhooks/create          # Create webhook endpoint
+GET    /stripe/webhooks/read/:id        # Retrieve webhook endpoint
+PATCH  /stripe/webhooks/update/:id      # Update webhook endpoint
+DELETE /stripe/webhooks/delete/:id      # Delete webhook endpoint
+GET    /stripe/webhooks/list            # List webhook endpoints
+```
+
 ---
 
 ## ⚙️ Query Parameters
@@ -95,6 +107,12 @@ GET    /stripe/payment-links/line-items/:id # Get line items
 - `starting_after` - Pagination cursor
 - `ending_before` - Pagination cursor
 
+### Webhook Endpoints
+
+- `limit` - Number of items (max 100)
+- `starting_after` - Pagination cursor
+- `ending_before` - Pagination cursor
+
 ---
 
 ## 🗂️ Project Structure
@@ -106,12 +124,14 @@ stripe/
 │   ├── price.services.ts        # Price CRUD operations
 │   ├── session.services.ts      # Checkout session operations
 │   ├── payment-link.services.ts # Payment link operations
+│   ├── webhook.services.ts      # Webhook endpoint operations
 │   └── index.ts                 # Service exports
 ├── routes/
 │   ├── product.routers.ts       # Product endpoints
 │   ├── price.routers.ts         # Price endpoints
 │   ├── session.routers.ts       # Session endpoints
 │   ├── payment-link.routers.ts  # Payment link endpoints
+│   ├── webhook.routers.ts       # Webhook endpoint endpoints
 │   └── index.ts                 # Router exports
 ├── types/
 │   └── index.ts                 # TypeScript type definitions
