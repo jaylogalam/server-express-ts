@@ -20,7 +20,7 @@ router.post("/create", async (req: Request, res: Response) => {
  */
 router.get("/read/:id", async (req: Request, res: Response) => {
   try {
-    const product = await productServices.readProduct(req.params.id);
+    const product = await productServices.retrieveProduct(req.params.id);
     return res.json(product);
   } catch (error: any) {
     return res.status(404).json({ error: error.message });

@@ -15,7 +15,7 @@ const priceServices = {
     return price;
   },
 
-  readPrice: async (id: string): Promise<PriceResponse> => {
+  retrievePrice: async (id: string): Promise<PriceResponse> => {
     const price = await stripe.prices.retrieve(id);
     return price;
   },

@@ -20,7 +20,7 @@ router.post("/create", async (req: Request, res: Response) => {
  */
 router.get("/read/:id", async (req: Request, res: Response) => {
   try {
-    const price = await priceServices.readPrice(req.params.id);
+    const price = await priceServices.retrievePrice(req.params.id);
     return res.json(price);
   } catch (error: any) {
     return res.status(404).json({ error: error.message });

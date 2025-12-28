@@ -17,7 +17,7 @@ const productServices = {
     return product;
   },
 
-  readProduct: async (id: string): Promise<ProductResponse> => {
+  retrieveProduct: async (id: string): Promise<ProductResponse> => {
     const product = await stripe.products.retrieve(id);
     return product;
   },
