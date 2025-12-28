@@ -1,4 +1,22 @@
-# Stripe CRUD Quick Reference
+# Stripe Feature - Quick Reference
+
+Complete Stripe integration with services and routers for Products, Prices, Checkout Sessions, and Payment Links.
+
+---
+
+## ⚠️ Important Notes
+
+> **Environment Variable**: Requires `STRIPE_SECRET_KEY` in your `.env` file
+
+> **Price Immutability**: Cannot change `unit_amount` or `currency` after creation
+
+> **Product Deletion**: Products are archived, not permanently deleted
+
+> **Session Expiration**: Checkout sessions auto-expire after 24 hours unless completed
+
+> **Payment Links**: Shareable URLs for accepting payments without building custom checkout
+
+---
 
 ## 🚀 Endpoints Overview
 
@@ -16,52 +34,31 @@ GET    /stripe/products/search          # Search products
 ### Prices: `/stripe/prices`
 
 ```bash
-POST   /stripe/prices/create             # Create price
-GET    /stripe/prices/retrieve/:id       # Retrieve price
-PATCH  /stripe/prices/update/:id         # Update price (metadata only)
-GET    /stripe/prices/list               # List prices
-GET    /stripe/prices/search             # Search prices
+POST   /stripe/prices/create            # Create price
+GET    /stripe/prices/retrieve/:id      # Retrieve price
+PATCH  /stripe/prices/update/:id        # Update price (metadata only)
+GET    /stripe/prices/list              # List prices
+GET    /stripe/prices/search            # Search prices
 ```
 
----
-
-## 📦 Quick Start Examples
-
-### Create Product + Price
+### Checkout Sessions: `/stripe/sessions`
 
 ```bash
-# 1. Create product
-curl -X POST http://localhost:3000/stripe/products \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Pro Plan",
-    "description": "Professional tier"
-  }'
-
-# Response: {"id": "prod_xxx", ...}
-
-# 2. Create monthly price
-curl -X POST http://localhost:3000/stripe/prices \
-  -H "Content-Type: application/json" \
-  -d '{
-    "product": "prod_xxx",
-    "currency": "usd",
-    "unit_amount": 2999,
-    "recurring": {"interval": "month"}
-  }'
+POST   /stripe/sessions/create          # Create checkout session
+GET    /stripe/sessions/retrieve/:id    # Retrieve session
+PATCH  /stripe/sessions/update/:id      # Update session
+GET    /stripe/sessions/list            # List sessions
+POST   /stripe/sessions/expire/:id      # Expire session
 ```
 
-### List with Filters
+### Payment Links: `/stripe/payment-links`
 
 ```bash
-# Active products only
-GET /stripe/products?active=true&limit=10
-
-# Prices for specific product
-GET /stripe/prices?product=prod_xxx
-
-# Recurring USD prices
-GET /stripe/prices?type=recurring&currency=usd
+POST   /stripe/payment-links/create         # Create payment link
+GET    /stripe/payment-links/retrieve/:id   # Retrieve payment link
+PATCH  /stripe/payment-links/update/:id     # Update payment link
+GET    /stripe/payment-links/list           # List payment links
+GET    /stripe/payment-links/line-items/:id # Get line items
 ```
 
 ---
@@ -85,12 +82,38 @@ GET /stripe/prices?type=recurring&currency=usd
 - `starting_after` - Pagination cursor
 - `ending_before` - Pagination cursor
 
+### Checkout Sessions
+
+- `limit` - Number of items (max 100)
+- `starting_after` - Pagination cursor
+- `ending_before` - Pagination cursor
+
+### Payment Links
+
+- `active` - Filter by active status (true/false)
+- `limit` - Number of items (max 100)
+- `starting_after` - Pagination cursor
+- `ending_before` - Pagination cursor
+
 ---
 
-## ⚠️ Important Notes
+## 🗂️ Project Structure
 
-> **Price Immutability**: Cannot change `unit_amount` or `currency` after creation
-
-> **Route Change**: `/stripe/product/*` → `/stripe/products/*`
-
-> **Deletion**: Products are archived, not permanently deleted
+```
+stripe/
+├── services/
+│   ├── product.services.ts      # Product CRUD operations
+│   ├── price.services.ts        # Price CRUD operations
+│   ├── session.services.ts      # Checkout session operations
+│   ├── payment-link.services.ts # Payment link operations
+│   └── index.ts                 # Service exports
+├── routes/
+│   ├── product.routers.ts       # Product endpoints
+│   ├── price.routers.ts         # Price endpoints
+│   ├── session.routers.ts       # Session endpoints
+│   ├── payment-link.routers.ts  # Payment link endpoints
+│   └── index.ts                 # Router exports
+├── types/
+│   └── index.ts                 # TypeScript type definitions
+└── README.md                    # This file
+```
