@@ -1,4 +1,3 @@
-import Stripe from "stripe";
 import {
   CreateCheckoutSessionParams,
   UpdateCheckoutSessionParams,
@@ -6,8 +5,7 @@ import {
   CheckoutSessionResponse,
   CheckoutSessionListResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "../../../core/config/stripe.config";
 
 const checkoutSessionServices = {
   createSession: async (

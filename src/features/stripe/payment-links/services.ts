@@ -1,13 +1,13 @@
-import Stripe from "stripe";
 import {
   CreatePaymentLinkParams,
   UpdatePaymentLinkParams,
   ListPaymentLinksParams,
   PaymentLinkResponse,
   PaymentLinkListResponse,
+  LinkListLineItemsParams,
+  LineItemsResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "../../../core/config/stripe.config";
 
 const paymentLinkServices = {
   createPaymentLink: async (
@@ -39,8 +39,8 @@ const paymentLinkServices = {
 
   listLineItems: async (
     id: string,
-    params?: Stripe.PaymentLinkListLineItemsParams
-  ): Promise<Stripe.ApiList<Stripe.LineItem>> => {
+    params?: LinkListLineItemsParams
+  ): Promise<LineItemsResponse> => {
     const lineItems = await stripe.paymentLinks.listLineItems(id, params);
     return lineItems;
   },

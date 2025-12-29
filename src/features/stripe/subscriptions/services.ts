@@ -1,4 +1,3 @@
-import Stripe from "stripe";
 import {
   CreateSubscriptionParams,
   UpdateSubscriptionParams,
@@ -9,8 +8,7 @@ import {
   CreatePortalSessionParams,
   PortalSessionResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+import stripe from "../../../core/config/stripe.config";
 
 const subscriptionServices = {
   /**

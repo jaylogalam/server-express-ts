@@ -4,6 +4,7 @@ import Stripe from "stripe";
 export type CreatePaymentLinkParams = Stripe.PaymentLinkCreateParams;
 export type UpdatePaymentLinkParams = Stripe.PaymentLinkUpdateParams;
 export type ListPaymentLinksParams = Stripe.PaymentLinkListParams;
+export type LinkListLineItemsParams = Stripe.PaymentLinkListLineItemsParams;
 
 // Response types
 export type PaymentLinkResponse = Stripe.PaymentLink;

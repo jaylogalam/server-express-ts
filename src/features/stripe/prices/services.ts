@@ -1,13 +1,12 @@
-import Stripe from "stripe";
 import {
   CreatePriceParams,
   UpdatePriceParams,
   ListPricesParams,
   PriceResponse,
   PriceListResponse,
+  PriceSearchResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "../../../core/config/stripe.config";
 
 const priceServices = {
   createPrice: async (params: CreatePriceParams): Promise<PriceResponse> => {
@@ -36,7 +35,7 @@ const priceServices = {
   searchPrices: async (
     query: string,
     limit?: number
-  ): Promise<Stripe.ApiSearchResult<Stripe.Price>> => {
+  ): Promise<PriceSearchResponse> => {
     const results = await stripe.prices.search({
       query,
       limit,

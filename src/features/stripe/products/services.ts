@@ -1,13 +1,13 @@
-import Stripe from "stripe";
 import {
   CreateProductParams,
   UpdateProductParams,
   ListProductsParams,
   ProductResponse,
   ProductListResponse,
+  ProductDeletedResponse,
+  ProductSearchResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "../../../core/config/stripe.config";
 
 const productServices = {
   createProduct: async (
@@ -30,7 +30,7 @@ const productServices = {
     return product;
   },
 
-  deleteProduct: async (id: string): Promise<Stripe.DeletedProduct> => {
+  deleteProduct: async (id: string): Promise<ProductDeletedResponse> => {
     const deleted = await stripe.products.del(id);
     return deleted;
   },
@@ -45,7 +45,7 @@ const productServices = {
   searchProducts: async (
     query: string,
     limit?: number
-  ): Promise<Stripe.ApiSearchResult<Stripe.Product>> => {
+  ): Promise<ProductSearchResponse> => {
     const results = await stripe.products.search({
       query,
       limit,

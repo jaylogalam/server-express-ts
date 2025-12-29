@@ -9,3 +9,4 @@ export type ListProductsParams = Stripe.ProductListParams;
 export type ProductResponse = Stripe.Product;
 export type ProductListResponse = Stripe.ApiList<Stripe.Product>;
 export type ProductSearchResponse = Stripe.ApiSearchResult<Stripe.Product>;
+export type ProductDeletedResponse = Stripe.DeletedProduct;

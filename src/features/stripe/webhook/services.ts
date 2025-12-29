@@ -6,8 +6,7 @@ import {
   WebhookEndpointResponse,
   WebhookEndpointListResponse,
 } from "./types";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import stripe from "../../../core/config/stripe.config";
 
 const webhookServices = {
   createWebhookEndpoint: async (
