@@ -5,7 +5,7 @@ import { registerMiddleware } from "./middleware";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
 import { connectToDatabase } from "./db/mongodb";
 import { stripeRouter } from "./features/stripe/routes";
-import stripeWebhookRouter from "./features/stripe/routes/stripe-webhook.routers";
+import stripeWebhookRouter from "./features/stripe/routes/webhook-stripe.routers";
 
 async function startServer() {
   const app = express();
