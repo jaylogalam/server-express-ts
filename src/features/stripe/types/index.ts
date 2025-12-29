@@ -11,9 +11,9 @@ export type UpdateProductParams = Stripe.ProductUpdateParams;
 export type ListProductsParams = Stripe.ProductListParams;
 
 // Checkout Session Types
-export type CreateSessionParams = Stripe.Checkout.SessionCreateParams;
-export type UpdateSessionParams = Stripe.Checkout.SessionUpdateParams;
-export type ListSessionsParams = Stripe.Checkout.SessionListParams;
+export type CreateCheckoutSessionParams = Stripe.Checkout.SessionCreateParams;
+export type UpdateCheckoutSessionParams = Stripe.Checkout.SessionUpdateParams;
+export type ListCheckoutSessionsParams = Stripe.Checkout.SessionListParams;
 
 // Payment Link Types
 export type CreatePaymentLinkParams = Stripe.PaymentLinkCreateParams;
@@ -38,14 +38,15 @@ export type CreatePortalSessionParams =
 // Response types
 export type ProductResponse = Stripe.Product;
 export type PriceResponse = Stripe.Price;
-export type SessionResponse = Stripe.Checkout.Session;
+export type CheckoutSessionResponse = Stripe.Checkout.Session;
 export type PaymentLinkResponse = Stripe.PaymentLink;
 export type WebhookEndpointResponse = Stripe.WebhookEndpoint;
 export type SubscriptionResponse = Stripe.Subscription;
 export type PortalSessionResponse = Stripe.BillingPortal.Session;
 export type ProductListResponse = Stripe.ApiList<Stripe.Product>;
 export type PriceListResponse = Stripe.ApiList<Stripe.Price>;
-export type SessionListResponse = Stripe.ApiList<Stripe.Checkout.Session>;
+export type CheckoutSessionListResponse =
+  Stripe.ApiList<Stripe.Checkout.Session>;
 export type PaymentLinkListResponse = Stripe.ApiList<Stripe.PaymentLink>;
 export type WebhookEndpointListResponse =
   Stripe.ApiList<Stripe.WebhookEndpoint>;
