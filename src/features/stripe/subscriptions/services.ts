@@ -8,7 +8,7 @@ import {
   SubscriptionListResponse,
   CreatePortalSessionParams,
   PortalSessionResponse,
-} from "../types";
+} from "./types";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 

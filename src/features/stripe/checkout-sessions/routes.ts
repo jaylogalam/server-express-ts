@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { checkoutSessionServices } from "../services";
+import checkoutSessionServices from "./services";
 
 const router = Router();
 
@@ -76,4 +76,4 @@ router.post("/expire/:id", async (req: Request, res: Response) => {
   }
 });
 
-export { router as checkoutSessionRouter };
+export { router as checkoutSessionsRouter };

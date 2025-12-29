@@ -4,8 +4,7 @@ import mongoose from "mongoose";
 import { registerMiddleware } from "./middleware";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
 import { connectToDatabase } from "./db/mongodb";
-import { stripeRouter } from "./features/stripe/routes";
-import stripeWebhookRouter from "./features/stripe/routes/webhook-stripe.routers";
+import { stripeRouter } from "./features/stripe";
 
 async function startServer() {
   const app = express();
@@ -18,9 +17,8 @@ async function startServer() {
   await registerMiddleware(app);
 
   // Routers
-  app.use("/webhooks", stripeWebhookRouter); // Stripe webhook handler
-  app.use("/subscription", subscriptionsRouter);
   app.use("/stripe", stripeRouter);
+  app.use("/subscription", subscriptionsRouter);
 
   // Start HTTP server
   const server = app.listen(process.env.PORT!, () => {

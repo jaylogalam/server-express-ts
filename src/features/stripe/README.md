@@ -154,24 +154,35 @@ POST   /webhooks/stripe                 # Receive Stripe webhook events
 
 ```
 stripe/
-├── services/
-│   ├── product.services.ts      # Product CRUD operations
-│   ├── price.services.ts        # Price CRUD operations
-│   ├── checkout-session.services.ts # Checkout session operations
-│   ├── payment-link.services.ts # Payment link operations
-│   ├── webhook.services.ts      # Webhook endpoint operations
-│   ├── subscription.services.ts # Subscription CRUD + Billing Portal
-│   └── index.ts                 # Service exports
-├── routes/
-│   ├── product.routers.ts       # Product endpoints
-│   ├── price.routers.ts         # Price endpoints
-│   ├── checkout-session.routers.ts # Session endpoints
-│   ├── payment-link.routers.ts  # Payment link endpoints
-│   ├── webhook.routers.ts       # Webhook endpoint endpoints
-│   ├── subscription.routers.ts  # Subscription endpoints
-│   ├── stripe-webhook.routers.ts # Stripe event webhook handler (/webhooks/stripe)
-│   └── index.ts                 # Router exports
-├── types/
-│   └── index.ts                 # TypeScript type definitions
+├── checkout-sessions/
+│   ├── config/                  # Configuration files
+│   ├── routes.ts                # Checkout session endpoints
+│   ├── services.ts              # Checkout session operations
+│   └── types.ts                 # Type definitions
+├── payment-links/
+│   ├── routes.ts                # Payment link endpoints
+│   ├── services.ts              # Payment link operations
+│   └── types.ts                 # Type definitions
+├── prices/
+│   ├── routes.ts                # Price endpoints
+│   ├── services.ts              # Price CRUD operations
+│   └── types.ts                 # Type definitions
+├── products/
+│   ├── routes.ts                # Product endpoints
+│   ├── services.ts              # Product CRUD operations
+│   └── types.ts                 # Type definitions
+├── subscriptions/
+│   ├── routes.ts                # Subscription endpoints
+│   ├── services.ts              # Subscription CRUD + Billing Portal
+│   └── types.ts                 # Type definitions
+├── webhook/
+│   ├── routes.ts                # Webhook endpoint management
+│   ├── services.ts              # Webhook endpoint CRUD operations
+│   └── types.ts                 # Type definitions
+├── webhook-events/
+│   ├── routes.ts                # Stripe event webhook handler (/webhooks/stripe)
+│   ├── services.ts              # Webhook event processing logic
+│   └── types.ts                 # Type definitions
+├── index.ts                     # Main router with all sub-routers
 └── README.md                    # This file
 ```

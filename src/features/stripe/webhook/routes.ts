@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { webhookServices } from "../services";
+import webhookServices from "./services";
 
 const router = Router();
 
@@ -77,4 +77,4 @@ router.get("/list", async (req: Request, res: Response) => {
   }
 });
 
-export { router as webhookRouter };
+export { router as webhooksRouter };

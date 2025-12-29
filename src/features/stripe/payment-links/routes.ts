@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { paymentLinkServices } from "../services";
+import paymentLinkServices from "./services";
 
 const router = Router();
 
@@ -90,4 +90,4 @@ router.get("/line-items/:id", async (req: Request, res: Response) => {
   }
 });
 
-export { router as paymentLinkRouter };
+export { router as paymentLinksRouter };

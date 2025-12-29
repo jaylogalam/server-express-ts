@@ -5,7 +5,7 @@ import {
   ListProductsParams,
   ProductResponse,
   ProductListResponse,
-} from "../types";
+} from "./types";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 

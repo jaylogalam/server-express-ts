@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import subscriptionServices from "../services/subscription.services";
+import subscriptionServices from "./services";
 
 const router = Router();
 
@@ -123,4 +123,4 @@ router.post("/portal", async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+export { router as subscriptionsRouter };
