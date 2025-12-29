@@ -5,16 +5,22 @@ import { registerMiddleware } from "./middleware";
 import { subscriptionsRouter } from "./features/subscriptions/routes";
 import { connectToDatabase } from "./db/mongodb";
 import { stripeRouter } from "./features/stripe";
+import { stripeWebhookEventsRouter } from "./webhook-events";
 
 async function startServer() {
   const app = express();
 
   // Connect to database first
   await connectToDatabase();
-  console.log("✓ Database connected");
 
-  // Then setup middleware (async because of Better Auth)
+  // Webhooks
+  app.use("/stripe-webhook-events", stripeWebhookEventsRouter);
+
+  // Middleware
   await registerMiddleware(app);
+
+  // Body parser
+  app.use(express.json());
 
   // Routers
   app.use("/stripe", stripeRouter);

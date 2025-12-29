@@ -28,5 +28,6 @@ export async function connectToDatabase(): Promise<Mongoose> {
   }
 
   cached.conn = await cached.promise;
+  console.log("✓ Database connected");
   return cached.conn;
 }

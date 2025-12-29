@@ -5,7 +5,6 @@ import { checkoutSessionsRouter } from "./checkout-sessions/routes";
 import { paymentLinksRouter } from "./payment-links/routes";
 import { webhooksRouter } from "./webhook/routes";
 import { subscriptionsRouter } from "./subscriptions/routes";
-import { webhookEventsRouter } from "./webhook-events/routes";
 
 const router = Router();
 
@@ -15,6 +14,5 @@ router.use("/prices", pricesRouter);
 router.use("/products", productsRouter);
 router.use("/subscriptions", subscriptionsRouter);
 router.use("/webhooks", webhooksRouter);
-router.use("/webhook-events", webhookEventsRouter);
 
 export { router as stripeRouter };
