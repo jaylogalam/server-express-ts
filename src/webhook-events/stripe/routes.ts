@@ -1,11 +1,11 @@
 import { Router, Request, Response } from "express";
 import express from "express";
 import Stripe from "stripe";
+import { syncSubscriptionPlan } from "../../features/subscriptions/stripe";
+import stripe from "../../core/config/stripe.config";
 
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 
-const stripe = new Stripe(STRIPE_SECRET_KEY!);
 const router = Router();
 
 router.post(
@@ -29,8 +29,18 @@ router.post(
     switch (event.type) {
       case "product.created":
       case "product.updated":
-        const product = await stripe.products.retrieve(event.data.object.id);
-        console.log("Product:", product);
+        await syncSubscriptionPlan({
+          product: event.data.object as Stripe.Product,
+        });
+        console.log("Product synced:", event.data.object.id);
+        break;
+
+      case "price.created":
+      case "price.updated":
+        await syncSubscriptionPlan({
+          price: event.data.object as Stripe.Price,
+        });
+        console.log("Price synced:", event.data.object.id);
         break;
 
       default:
