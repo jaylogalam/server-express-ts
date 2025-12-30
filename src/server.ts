@@ -1,11 +1,12 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import { registerMiddleware } from "./middleware";
-import { subscriptionsRouter } from "./features/subscriptions";
 import { connectToDatabase } from "./db/mongodb";
-import { stripeRouter } from "./packages/stripe";
 import { webhooksRouter } from "./webhooks";
+import { registerMiddleware } from "./middleware";
+import { paymentsRouter } from "./features/payments";
+import { subscriptionsRouter } from "./features/subscriptions";
+import { stripeRouter } from "./packages/stripe";
 
 async function startServer() {
   const app = express();
@@ -23,6 +24,7 @@ async function startServer() {
   app.use(express.json());
 
   // Routers
+  app.use("/payments", paymentsRouter);
   app.use("/subscription", subscriptionsRouter);
 
   // Package Routers
