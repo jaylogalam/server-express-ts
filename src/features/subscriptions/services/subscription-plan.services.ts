@@ -10,7 +10,7 @@ const plansServices = {
   },
 
   async readPlans() {
-    const plans = await SubscriptionPlan.find({ is_active: true });
+    const plans = await SubscriptionPlan.find({ isActive: true });
     return plans;
   },
 };
