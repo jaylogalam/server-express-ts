@@ -16,6 +16,15 @@ export async function authMiddleware() {
     emailAndPassword: {
       enabled: true,
     },
+    advanced: {
+      cookiePrefix: "better-auth", // optional
+      useSecureCookies: true, // Force secure cookies in production
+      defaultCookieAttributes: {
+        sameSite: "none", // REQUIRED for Vercel -> Render communication
+        secure: true, // REQUIRED for HTTPS
+        httpOnly: true,
+      },
+    },
   });
 
   return auth;
