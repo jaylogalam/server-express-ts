@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { subscriptionPlanRouter } from "./routes/subscription-plan.router";
+import { subscriptionProductRouter } from "./routes/subscription-product.router";
+import { subscriptionPriceRouter } from "./routes/subscription-price.router";
 
 const router = Router();
 
-router.use("/plans", subscriptionPlanRouter);
+router.use("/products", subscriptionProductRouter);
+router.use("/prices", subscriptionPriceRouter);
 
 export { router as subscriptionsRouter };

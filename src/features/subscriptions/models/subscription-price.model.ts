@@ -1,14 +1,9 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface ISubscriptionPlan extends Document {
+export interface ISubscriptionPrice extends Document {
   // STRIPE LINKS
-  stripeProductId: string;
   stripePriceId: string;
-
-  // UI CONTENT
-  name: string;
-  description: string | null;
-  features: string[];
+  stripeProductId: string;
 
   // FINANCIAL DATA
   amountCents: number | null;
@@ -17,35 +12,19 @@ export interface ISubscriptionPlan extends Document {
 
   // SYSTEM STATUS
   isActive: boolean;
-  mostPopular: boolean;
 }
 
-const subscriptionPlanSchema = new Schema<ISubscriptionPlan>(
+const subscriptionPriceSchema = new Schema<ISubscriptionPrice>(
   {
     // STRIPE LINKS
-    stripeProductId: {
+    stripePriceId: {
       type: String,
       required: true,
       unique: true,
     },
-    stripePriceId: {
+    stripeProductId: {
       type: String,
       required: true,
-    },
-
-    // UI CONTENT
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    description: {
-      type: String,
-      default: null,
-    },
-    features: {
-      type: [String],
-      default: [],
     },
 
     // FINANCIAL DATA
@@ -65,10 +44,6 @@ const subscriptionPlanSchema = new Schema<ISubscriptionPlan>(
     // SYSTEM STATUS
     isActive: {
       type: Boolean,
-      default: true,
-    },
-    mostPopular: {
-      type: Boolean,
       default: false,
     },
   },
@@ -80,17 +55,17 @@ const subscriptionPlanSchema = new Schema<ISubscriptionPlan>(
     versionKey: false,
     toJSON: {
       transform: (_doc, ret) => {
-        delete (ret as any).stripeProductId;
         delete (ret as any)._id;
+        delete (ret as any).stripeProductId;
         return ret;
       },
     },
   }
 );
 
-const SubscriptionPlan = model<ISubscriptionPlan>(
-  "subscription-plans",
-  subscriptionPlanSchema
+const SubscriptionPrice = model<ISubscriptionPrice>(
+  "subscription-prices",
+  subscriptionPriceSchema
 );
 
-export default SubscriptionPlan;
+export default SubscriptionPrice;
