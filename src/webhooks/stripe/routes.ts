@@ -1,8 +1,9 @@
 import { Router, Request, Response } from "express";
 import express from "express";
 import Stripe from "stripe";
-import { syncSubscriptionPlan } from "../../features/subscriptions/stripe";
 import stripe from "../../core/config/stripe.config";
+import { subscriptionProductServices } from "../../features/subscriptions/services/subscription-product.services";
+import { subscriptionPriceServices } from "../../features/subscriptions/services/subscription-price.services";
 
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -29,18 +30,19 @@ router.post(
     switch (event.type) {
       case "product.created":
       case "product.updated":
-        await syncSubscriptionPlan({
-          product: event.data.object as Stripe.Product,
-        });
-        console.log("Product synced:", event.data.object.id);
+        await subscriptionProductServices.createAndUpdate(event.data.object);
+        break;
+      case "product.deleted":
+        await subscriptionProductServices.delete(event.data.object);
         break;
 
       case "price.created":
       case "price.updated":
-        await syncSubscriptionPlan({
-          price: event.data.object as Stripe.Price,
-        });
-        console.log("Price synced:", event.data.object.id);
+        await subscriptionPriceServices.createAndUpdate(event.data.object);
+        break;
+
+      case "price.deleted":
+        await subscriptionPriceServices.delete(event.data.object);
         break;
 
       default:

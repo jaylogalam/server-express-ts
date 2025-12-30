@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const products = await subscriptionProductServices.listProducts();
+    const products = await subscriptionProductServices.list();
     return res.json(products);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
