@@ -6,7 +6,6 @@ import { webhooksRouter } from "./webhooks";
 import { registerMiddleware } from "./middleware";
 import { paymentsRouter } from "./features/payments";
 import { subscriptionsRouter } from "./features/subscriptions";
-import { stripeRouter } from "./packages/stripe";
 
 async function startServer() {
   const app = express();
@@ -26,9 +25,6 @@ async function startServer() {
   // Routers
   app.use("/payments", paymentsRouter);
   app.use("/subscription", subscriptionsRouter);
-
-  // Package Routers
-  app.use("/stripe", stripeRouter);
 
   // Start HTTP server
   const server = app.listen(process.env.PORT!, () => {
