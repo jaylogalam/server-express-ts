@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { subscriptionPlanRouter } from "./subscription-plan.router";
+import { subscriptionPlanRouter } from "./routes/subscription-plan.router";
 
 const router = Router();
 

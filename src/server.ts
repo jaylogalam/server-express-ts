@@ -2,10 +2,10 @@ import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import { registerMiddleware } from "./middleware";
-import { subscriptionsRouter } from "./features/subscriptions/routes";
+import { subscriptionsRouter } from "./features/subscriptions";
 import { connectToDatabase } from "./db/mongodb";
-import { stripeRouter } from "./features/stripe";
-import { stripeWebhookEventsRouter } from "./webhook-events";
+import { stripeRouter } from "./packages/stripe";
+import { webhooksRouter } from "./webhooks";
 
 async function startServer() {
   const app = express();
@@ -14,7 +14,7 @@ async function startServer() {
   await connectToDatabase();
 
   // Webhooks
-  app.use("/stripe-webhook-events", stripeWebhookEventsRouter);
+  app.use("/webhooks", webhooksRouter);
 
   // Middleware
   await registerMiddleware(app);
@@ -23,8 +23,10 @@ async function startServer() {
   app.use(express.json());
 
   // Routers
-  app.use("/stripe", stripeRouter);
   app.use("/subscription", subscriptionsRouter);
+
+  // Package Routers
+  app.use("/stripe", stripeRouter);
 
   // Start HTTP server
   const server = app.listen(process.env.PORT!, () => {
