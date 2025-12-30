@@ -51,7 +51,7 @@ const subscriptionPlanSchema = new Schema<ISubscriptionPlan>(
     // FINANCIAL DATA
     amountCents: {
       type: Number,
-      default: null,
+      required: true,
     },
     currency: {
       type: String,
