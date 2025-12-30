@@ -1,23 +1,53 @@
 import "dotenv/config";
 import express from "express";
+import mongoose from "mongoose";
+import { connectToDatabase } from "./db/mongodb";
+import { webhooksRouter } from "./webhooks";
 import { registerMiddleware } from "./middleware";
-import { client } from "./db/mongodb";
+import { paymentsRouter } from "./features/payments";
+import { subscriptionsRouter } from "./features/subscriptions";
+import { stripeRouter } from "./packages/stripe";
 
-const app = express();
+async function startServer() {
+  const app = express();
 
-registerMiddleware(app);
+  // Connect to database first
+  await connectToDatabase();
 
-// Server
-const server = app.listen(process.env.PORT!, () => {
-  console.log(`Server is running on port ${process.env.PORT!}`);
-});
+  // Webhooks
+  app.use("/webhooks", webhooksRouter);
 
-// Graceful Shutdown
-process.on("SIGTERM", async () => {
-  console.log("SIGTERM signal received: closing HTTP server");
-  server.close(async () => {
-    await client.close();
-    console.log("MongoDB connection closed.");
-    process.exit(0);
+  // Middleware
+  await registerMiddleware(app);
+
+  // Body parser
+  app.use(express.json());
+
+  // Routers
+  app.use("/payments", paymentsRouter);
+  app.use("/subscription", subscriptionsRouter);
+
+  // Package Routers
+  app.use("/stripe", stripeRouter);
+
+  // Start HTTP server
+  const server = app.listen(process.env.PORT!, () => {
+    console.log(`✓ Server is running on port ${process.env.PORT!}`);
   });
+
+  // Graceful Shutdown
+  process.on("SIGTERM", async () => {
+    console.log("SIGTERM signal received: closing HTTP server");
+    server.close(async () => {
+      await mongoose.connection.close();
+      console.log("✓ Mongoose connection closed.");
+      process.exit(0);
+    });
+  });
+}
+
+// Start the application
+startServer().catch((error) => {
+  console.error("✗ Failed to start server:", error);
+  process.exit(1);
 });

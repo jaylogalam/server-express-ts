@@ -1,11 +1,10 @@
-import express from "express";
+import express, { Application } from "express";
 import { corsMiddleware } from "./cors";
-import { auth, toNodeHandler } from "./auth";
+import { authMiddleware, toNodeHandler } from "./auth";
 
-const registerMiddleware = (app: express.Application) => {
+const registerMiddleware = async (app: Application) => {
   app.use(corsMiddleware);
-  app.all("/api/auth/*splat", toNodeHandler(auth));
-  app.use(express.json());
+  app.all("/api/auth/*splat", toNodeHandler(await authMiddleware()));
 };
 
 export { registerMiddleware };

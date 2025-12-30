@@ -1,0 +1,57 @@
+import {
+  CreateProductParams,
+  UpdateProductParams,
+  ListProductsParams,
+  ProductResponse,
+  ProductListResponse,
+  ProductDeletedResponse,
+  ProductSearchResponse,
+} from "./types";
+import stripe from "../../../core/config/stripe.config";
+
+const productServices = {
+  createProduct: async (
+    params: CreateProductParams
+  ): Promise<ProductResponse> => {
+    const product = await stripe.products.create(params);
+    return product;
+  },
+
+  retrieveProduct: async (id: string): Promise<ProductResponse> => {
+    const product = await stripe.products.retrieve(id);
+    return product;
+  },
+
+  updateProduct: async (
+    id: string,
+    params: UpdateProductParams
+  ): Promise<ProductResponse> => {
+    const product = await stripe.products.update(id, params);
+    return product;
+  },
+
+  deleteProduct: async (id: string): Promise<ProductDeletedResponse> => {
+    const deleted = await stripe.products.del(id);
+    return deleted;
+  },
+
+  listProducts: async (
+    params?: ListProductsParams
+  ): Promise<ProductListResponse> => {
+    const products = await stripe.products.list(params);
+    return products;
+  },
+
+  searchProducts: async (
+    query: string,
+    limit?: number
+  ): Promise<ProductSearchResponse> => {
+    const results = await stripe.products.search({
+      query,
+      limit,
+    });
+    return results;
+  },
+};
+
+export default productServices;
