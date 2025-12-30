@@ -12,6 +12,7 @@ export async function authMiddleware() {
     database: mongodbAdapter(client.db("excel_visualizer")),
     basePath: "/api/auth",
     trustedOrigins: origins,
+    secret: process.env.BETTER_AUTH_SECRET!,
     emailAndPassword: {
       enabled: true,
     },
