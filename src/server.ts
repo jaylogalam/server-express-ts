@@ -7,6 +7,7 @@ import { authConfig, toNodeHandler } from "./middleware/auth";
 import { stripeWebhooksRouter } from "./webhooks/stripe";
 import { paymentsRouter } from "./features/payments";
 import { subscriptionsRouter } from "./features/subscriptions";
+import { stripeRouter } from "./stripe";
 
 const app = express();
 // Database
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routers
 app.use("/payments", paymentsRouter);
 app.use("/subscriptions", subscriptionsRouter);
+app.use("/test/stripe", stripeRouter);
 
 // Start HTTP server
 app.listen(process.env.PORT!, () => {
