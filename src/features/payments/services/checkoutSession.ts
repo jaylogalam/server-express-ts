@@ -5,7 +5,7 @@ import {
   CheckoutSessionResponse,
   CheckoutSessionListResponse,
 } from "../types/checkoutSession";
-import stripe from "../../../core/config/stripe.config";
+import stripe from "../../../lib/stripe";
 
 const checkoutSessionServices = {
   createSession: async (

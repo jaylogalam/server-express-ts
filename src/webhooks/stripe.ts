@@ -1,9 +1,9 @@
 import { Router, Request, Response } from "express";
 import express from "express";
 import Stripe from "stripe";
-import stripe from "../../core/config/stripe.config";
-import { subscriptionProductServices } from "../../features/subscriptions/services/subscription-product.services";
-import { subscriptionPriceServices } from "../../features/subscriptions/services/subscription-price.services";
+import stripe from "../lib/stripe";
+import { subscriptionProductServices } from "../features/subscriptions/services/subscription-product.services";
+import { subscriptionPriceServices } from "../features/subscriptions/services/subscription-price.services";
 
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -52,4 +52,4 @@ router.post(
   }
 );
 
-export { router as stripeWebhookEventsRouter };
+export { router as stripeWebhooksRouter };
