@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { accountsRouter } from "./accounts/routes";
 import { productsRouter } from "./products/routes";
 import { pricesRouter } from "./prices/routes";
 import { plansRouter } from "./plans/routes";
@@ -9,6 +10,7 @@ import { subscriptionsRouter } from "./subscriptions/routes";
 
 const router = Router();
 
+router.use("/accounts", accountsRouter);
 router.use("/checkout-sessions", checkoutSessionsRouter);
 router.use("/payment-links", paymentLinksRouter);
 router.use("/plans", plansRouter);
