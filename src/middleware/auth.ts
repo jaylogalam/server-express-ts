@@ -1,11 +1,16 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { db } from "../db/mongodb";
 import { toNodeHandler } from "better-auth/node";
 import { origins } from "./cors";
+import mongoose from "mongoose";
+import connectDb from "../lib/db";
+
+await connectDb();
+const client = mongoose.connection.getClient();
+const db = client.db(process.env.MONGODB_NAME!);
 
 const authConfig = betterAuth({
-  database: mongodbAdapter(db),
+  database: mongodbAdapter(db, { client: client }),
   basePath: "/api/auth",
   trustedOrigins: origins,
   secret: process.env.BETTER_AUTH_SECRET!,

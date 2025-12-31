@@ -1,13 +1,16 @@
 import "dotenv/config";
 import express from "express";
+import connectDb from "./lib/db";
 import mongoose from "mongoose";
+import { corsConfig } from "./middleware/cors";
+import { authConfig, toNodeHandler } from "./middleware/auth";
+import { stripeWebhooksRouter } from "./webhooks/stripe";
 import { paymentsRouter } from "./features/payments";
 import { subscriptionsRouter } from "./features/subscriptions";
-import { stripeWebhooksRouter } from "./webhooks/stripe";
-import { authConfig, toNodeHandler } from "./middleware/auth";
-import { corsConfig } from "./middleware/cors";
 
 const app = express();
+// Database
+connectDb();
 
 // Webhooks
 app.use("/webhooks/stripe", stripeWebhooksRouter);
