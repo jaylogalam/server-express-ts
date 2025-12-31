@@ -2,8 +2,8 @@ import { Router, Request, Response } from "express";
 import express from "express";
 import Stripe from "stripe";
 import stripe from "../lib/stripe";
-import { subscriptionProductServices } from "../features/subscriptions/services/subscription-product.services";
-import { subscriptionPriceServices } from "../features/subscriptions/services/subscription-price.services";
+import { subscriptionProductServices } from "../features/subscriptions/product.services";
+import { subscriptionPriceServices } from "../features/subscriptions/price.services";
 
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -26,6 +26,8 @@ router.post(
       console.log("Error processing webhook event:", error);
       return res.status(400);
     }
+
+    console.log("Event received:", event.type);
 
     switch (event.type) {
       case "product.created":

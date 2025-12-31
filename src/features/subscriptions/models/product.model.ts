@@ -64,7 +64,6 @@ const subscriptionProductSchema = new Schema<ISubscriptionProduct>(
     toJSON: {
       transform: (_doc, ret) => {
         delete (ret as any).stripeProductId;
-        delete (ret as any)._id;
         return ret;
       },
     },

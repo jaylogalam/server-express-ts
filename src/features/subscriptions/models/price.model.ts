@@ -55,7 +55,6 @@ const subscriptionPriceSchema = new Schema<ISubscriptionPrice>(
     versionKey: false,
     toJSON: {
       transform: (_doc, ret) => {
-        delete (ret as any)._id;
         delete (ret as any).stripeProductId;
         return ret;
       },

@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import SubscriptionProduct from "../models/subscription-product.model";
+import SubscriptionProduct from "./models/product.model";
 
 const subscriptionProductServices = {
   async createAndUpdate(product: Stripe.Product) {
@@ -16,6 +16,14 @@ const subscriptionProductServices = {
       },
       { upsert: true, new: true }
     );
+  },
+
+  async read(stripeProductId: string, isActive: boolean) {
+    const product = await SubscriptionProduct.findOne({
+      stripeProductId: stripeProductId,
+      isActive: isActive,
+    });
+    return product;
   },
 
   async list() {

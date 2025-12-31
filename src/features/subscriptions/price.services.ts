@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import SubscriptionPrice from "../models/subscription-price.model";
+import SubscriptionPrice from "./models/price.model";
 
 const subscriptionPriceServices = {
   async createAndUpdate(price: Stripe.Price) {
@@ -15,6 +15,14 @@ const subscriptionPriceServices = {
       },
       { upsert: true, new: true }
     );
+  },
+
+  async read(stripePriceId: string, isActive: boolean) {
+    const price = await SubscriptionPrice.findOne({
+      stripePriceId: stripePriceId,
+      isActive: isActive,
+    });
+    return price;
   },
 
   async list() {
