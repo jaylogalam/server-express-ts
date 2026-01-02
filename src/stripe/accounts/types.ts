@@ -7,4 +7,4 @@ export type ListAccountsParams = Stripe.V2.Core.AccountListParams;
 
 // Response types
 export type AccountResponse = Stripe.V2.Core.Account;
-export type AccountListResponse = Array<Stripe.V2.Core.Account>;
+export type AccountListResponse = Stripe.ApiList<Stripe.V2.Core.Account>;
