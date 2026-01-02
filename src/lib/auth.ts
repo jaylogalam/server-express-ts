@@ -20,21 +20,9 @@ const authConfig = betterAuth({
   basePath: "/api/auth",
   trustedOrigins: origins,
   secret: process.env.BETTER_AUTH_SECRET!,
-  // emailVerification: {
-  //   sendVerificationEmail: async ({ user, url }) => {
-  //     resend.emails.send({
-  //       from: "onboarding@resend.dev",
-  //       to: user.email,
-  //       subject: "Verify your email address",
-  //       react: VerificationEmailHtml({
-  //         username: user.name!,
-  //         verifyUrl: url,
-  //         appName: "ExcelViz",
-  //       }),
-  //     });
-  //   },
-  //   autoSignInAfterVerification: true,
-  // },
+  emailVerification: {
+    autoSignInAfterVerification: true,
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
