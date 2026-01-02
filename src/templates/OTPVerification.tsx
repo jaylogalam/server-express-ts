@@ -8,17 +8,19 @@ import {
   Section,
 } from "@react-email/components";
 
-interface EmailVerificationProps {
+interface OTPVerificationProps {
   username: string;
   verifyUrl: string;
   appName: string;
+  otp: string;
 }
 
-export const EmailVerification = ({
+export const OTPVerification = ({
   username,
   verifyUrl,
   appName,
-}: EmailVerificationProps) => {
+  otp,
+}: OTPVerificationProps) => {
   return (
     <Html>
       <Body style={styles.body}>
@@ -28,13 +30,11 @@ export const EmailVerification = ({
           </Heading>
 
           <Text style={styles.text}>
-            Please verify your email address by clicking the button below.
+            Please verify your email address using the code below:
           </Text>
 
-          <Section style={styles.buttonContainer}>
-            <Button style={styles.button} href={verifyUrl}>
-              Verify Email
-            </Button>
+          <Section style={styles.otpContainer}>
+            <Text style={styles.otpCode}>{otp}</Text>
           </Section>
 
           <Text style={styles.footerText}>
@@ -70,18 +70,19 @@ const styles = {
     color: "#555",
     marginBottom: "20px",
   },
-  buttonContainer: {
+  otpContainer: {
     textAlign: "center" as const,
     margin: "30px 0",
+    padding: "20px",
+    backgroundColor: "#f8f9fa",
+    borderRadius: "8px",
   },
-  button: {
-    backgroundColor: "#2563eb",
-    color: "#ffffff",
-    padding: "12px 24px",
-    textDecoration: "none",
-    borderRadius: "5px",
+  otpCode: {
+    fontSize: "32px",
     fontWeight: "bold",
-    display: "inline-block",
+    letterSpacing: "8px",
+    color: "#2563eb",
+    margin: "0",
   },
   footerText: {
     fontSize: "14px",
@@ -90,4 +91,4 @@ const styles = {
   },
 };
 
-export default EmailVerification;
+export default OTPVerification;
