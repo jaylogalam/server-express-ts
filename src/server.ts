@@ -1,49 +1,42 @@
 import "dotenv/config";
 import express from "express";
+import connectDb from "./lib/db";
 import mongoose from "mongoose";
-import { connectToDatabase } from "./db/mongodb";
-import { webhooksRouter } from "./webhooks";
-import { registerMiddleware } from "./middleware";
+import { corsConfig } from "./lib/cors";
+import { authConfig, toNodeHandler } from "./lib/auth";
+import { stripeWebhooksRouter } from "./webhooks/stripe";
 import { paymentsRouter } from "./features/payments";
 import { subscriptionsRouter } from "./features/subscriptions";
+import { stripeRouter } from "./stripe";
 
-async function startServer() {
-  const app = express();
+const app = express();
+// Database
+connectDb();
 
-  // Connect to database first
-  await connectToDatabase();
+// Webhooks
+app.use("/webhooks/stripe", stripeWebhooksRouter);
 
-  // Webhooks
-  app.use("/webhooks", webhooksRouter);
+// Middleware
+app.use(corsConfig);
+app.all("/api/auth/*splat", toNodeHandler(authConfig));
 
-  // Middleware
-  await registerMiddleware(app);
+// Body parser
+app.use(express.json());
 
-  // Body parser
-  app.use(express.json());
+// Routers
+app.use("/payments", paymentsRouter);
+app.use("/subscriptions", subscriptionsRouter);
+app.use("/test/stripe", stripeRouter);
 
-  // Routers
-  app.use("/payments", paymentsRouter);
-  app.use("/subscription", subscriptionsRouter);
+// Start HTTP server
+app.listen(process.env.PORT!, () => {
+  console.log(`✓ Server is running on port ${process.env.PORT!}`);
+});
 
-  // Start HTTP server
-  const server = app.listen(process.env.PORT!, () => {
-    console.log(`✓ Server is running on port ${process.env.PORT!}`);
-  });
-
-  // Graceful Shutdown
-  process.on("SIGTERM", async () => {
-    console.log("SIGTERM signal received: closing HTTP server");
-    server.close(async () => {
-      await mongoose.connection.close();
-      console.log("✓ Mongoose connection closed.");
-      process.exit(0);
-    });
-  });
-}
-
-// Start the application
-startServer().catch((error) => {
-  console.error("✗ Failed to start server:", error);
-  process.exit(1);
+// Graceful Shutdown
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal received: closing HTTP server");
+  mongoose.connection.close();
+  console.log("✓ Mongoose connection closed.");
+  process.exit(0);
 });

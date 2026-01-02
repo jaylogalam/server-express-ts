@@ -1,0 +1,22 @@
+import { Router } from "express";
+import { accountsRouter } from "./accounts/routes";
+import { productsRouter } from "./products/routes";
+import { pricesRouter } from "./prices/routes";
+import { plansRouter } from "./plans/routes";
+import { checkoutSessionsRouter } from "./checkout-sessions/routes";
+import { paymentLinksRouter } from "./payment-links/routes";
+import { webhooksRouter } from "./webhook/routes";
+import { subscriptionsRouter } from "./subscriptions/routes";
+
+const router = Router();
+
+router.use("/accounts", accountsRouter);
+router.use("/checkout-sessions", checkoutSessionsRouter);
+router.use("/payment-links", paymentLinksRouter);
+router.use("/plans", plansRouter);
+router.use("/prices", pricesRouter);
+router.use("/products", productsRouter);
+router.use("/subscriptions", subscriptionsRouter);
+router.use("/webhooks", webhooksRouter);
+
+export { router as stripeRouter };

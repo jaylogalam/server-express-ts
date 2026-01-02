@@ -4,8 +4,8 @@ import {
   ListCheckoutSessionsParams,
   CheckoutSessionResponse,
   CheckoutSessionListResponse,
-} from "../types/checkoutSession";
-import stripe from "../../../lib/stripe";
+} from "./types";
+import stripe from "../../lib/stripe";
 
 const checkoutSessionServices = {
   createSession: async (

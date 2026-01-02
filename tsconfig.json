@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "CommonJS",
+    "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext"],
     "types": ["node"],
+    "jsx": "react-jsx",
     "rootDir": "./src",
     "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
@@ -12,6 +13,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }
